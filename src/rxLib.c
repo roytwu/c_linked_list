@@ -2,22 +2,40 @@
 #include <assert.h>
 #include "rxLib.h"
 
-//RxCreate is like a custom version of malloc,
-//which creates a struct
+static int new_total = 0;
+static int free_total = 0;
+
+//------ ----- ----- -----
+void debug_memAlloc(){
+	assert(new_total += 1);
+	assert( printf("memory allocated... (%d)\n", new_total) );
+}//----- ----- ----- -----
+
+
+//------ ----- ----- -----
+void debug_memFree(){
+	assert(free_total += 1);
+	assert( printf("memory freed... (%d)\n", free_total) );
+}//----- ----- ----- -----
+
+
+//------ ----- ----- -----
+//RxCreate is a custom version of malloc,
 void * RxCreate(size_t size){
 	void * p_rtnValue = malloc(size);
 	assert(p_rtnValue != NULL);
 
-	printf("RxCreate called, memeory is allocated!\n");
+	debug_memAlloc();
 	return p_rtnValue;  //return a void pointer
-}
+}//----- ----- ----- -----
 
-//RxDesgtroy is like a custom version of free,
-//which it is used to dispose a struct
+
+//------ ----- ----- -----
+//RxDesgtroy is a custom version of free
 void RxDestroy(void * p_ptr){
 	if(p_ptr != NULL){
 		free(p_ptr);
-		printf("RxDestroy called, memeory is freed!\n");
+		debug_memFree();
 	}
 
-}
+}//----- ----- ----- -----

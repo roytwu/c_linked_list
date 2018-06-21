@@ -28,7 +28,8 @@ void RxList_AddToBack(RxList *const pThis, void *p_item){
 
 //------ ----- ----- -----
 void RxList_CleanList(RxList *const pThis){
-	while (pThis->mp_head != NULL){
+	while (pThis->mp_head != NULL)
+	{
 
 		// let curNode traverse, starting from head node
 		RxNode * p_curNode = (pThis->mp_head);
@@ -39,8 +40,10 @@ void RxList_CleanList(RxList *const pThis){
 		p_curNode = NULL;
 
 		(pThis->m_size)-- ;
-		printf("m_size is: %d\n", pThis->m_size);
+		//printf("m_size is: %d\n", pThis->m_size);
 	}
+
+
 	return;
 }//----- ----- ----- -----
 
@@ -53,7 +56,7 @@ void RxList_Remove(RxList *const pThis, void *p_item){
 	RxNode * p_curNode = (pThis->mp_head); //store head node
 	RxNode * p_nxtNode;  //next node
 
-	//if the head node itself holds the key(p_item) to be deleted
+	//if the head node itself holds the data(p_item) to be deleted
 	if(RxNode_GetData(p_curNode) == p_item){
 		pThis->mp_head = RxNode_GetNext(p_curNode);  //reset head
 		//if the new head is NULL, the list shall be NULL
@@ -61,13 +64,16 @@ void RxList_Remove(RxList *const pThis, void *p_item){
 			pThis->mp_tail = NULL;
 		}
 		RxNode_Destroy(p_curNode);  //destroy and free old head
-		pThis->m_size--;
+		(pThis->m_size)--;
 		return;
 	}
 	
 	p_nxtNode = RxNode_GetNext(p_curNode); 
 	//search for the key(p_item) to be deleted
-	while(p_nxtNode != NULL){
+	
+	while(p_nxtNode != NULL)
+	{
+		p_nxtNode = RxNode_GetNext(p_curNode); 
 		//if the key(p_item) has been found
 		if(RxNode_GetData(p_nxtNode) == p_item){
 			//re-link, link curent node with the next-next node
@@ -81,7 +87,7 @@ void RxList_Remove(RxList *const pThis, void *p_item){
 			pThis->m_size--;
 			return;
 		}
-		p_curNode = p_nxtNode;
+		p_curNode = p_nxtNode; //traverse to next node
 	}
 	return;
 }//----- ----- ----- -----
