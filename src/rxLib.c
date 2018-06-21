@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <assert.h>
 #include "rxLib.h"
 
@@ -7,6 +8,7 @@ void * RxCreate(size_t size){
 	void * p_rtnValue = malloc(size);
 	assert(p_rtnValue != NULL);
 
+	printf("RxCreate called, memeory is allocated!\n");
 	return p_rtnValue;  //return a void pointer
 }
 
@@ -15,5 +17,7 @@ void * RxCreate(size_t size){
 void RxDestroy(void * p_ptr){
 	if(p_ptr != NULL){
 		free(p_ptr);
+		printf("RxDestroy called, memeory is freed!\n");
 	}
+
 }

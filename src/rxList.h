@@ -1,5 +1,5 @@
-#ifndef _RXLIST_H_ //include guards
-#define _RXLIST_H_ //include guards
+#ifndef RXLIST_H_ //include guards
+#define RXLIST_H_ //include guards
 
 #include <stdbool.h>
 #include <stdint.h>  //uint16_t
@@ -26,7 +26,7 @@ typedef struct RxList{
 
 void RxList_Init(RxList *const pThis);
 
-void RxList_Cleanup(RxList * const pThis);
+void RxList_CleanList(RxList * const pThis);
 
 void RxList_AddToFront(RxList * const pThis, void *p_item);
 
@@ -53,4 +53,4 @@ bool RxList_IsEmpty(RxList *const pThis);
 uint16_t RxList_GetSize(RxList *const pThis);
 
 
-#endif //_RXLIST_H_ include guards
+#endif //RXLIST_H_ include guards

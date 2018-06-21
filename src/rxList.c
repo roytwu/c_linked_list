@@ -6,29 +6,46 @@
 
 static void RxList_Add(RxList *const pThis, void *p_item, bool front);
 
+//------ ----- ----- -----
 void RxList_Init(RxList *const pThis){
 	pThis->mp_head = NULL;  //equivalent to (&p_me).mp_head = NULL;
 	pThis->mp_tail = NULL;
 	pThis->m_size = 0;
-}
-
-void RxList_Cleanup(RxList *const pThis){
-	if (pThis->mp_head == NULL){ return; } //verify that if the list is empty
-	
-	RxNode * p_curNode = (pThis->mp_head); //store head node
-}
+}//----- ----- ----- -----
 
 
+//------ ----- ----- -----
 void RxList_AddToFront(RxList *const pThis, void *p_item){
 	RxList_Add(pThis, p_item, true);
-}
+}//----- ----- ----- -----
 
 
+//------ ----- ----- -----
 void RxList_AddToBack(RxList *const pThis, void *p_item){
 	RxList_Add(pThis, p_item, false);
-}
+}//----- ----- ----- -----
 
 
+//------ ----- ----- -----
+void RxList_CleanList(RxList *const pThis){
+	while (pThis->mp_head != NULL){
+
+		// let curNode traverse, starting from head node
+		RxNode * p_curNode = (pThis->mp_head);
+
+		(pThis->mp_head) = RxNode_GetNext(p_curNode);//reset head node
+		
+		RxNode_Destroy(p_curNode);//destroy and free old head
+		p_curNode = NULL;
+
+		(pThis->m_size)-- ;
+		printf("m_size is: %d\n", pThis->m_size);
+	}
+	return;
+}//----- ----- ----- -----
+
+
+//------ ----- ----- -----
 void RxList_Remove(RxList *const pThis, void *p_item){
 
 	if (pThis->mp_head == NULL){ return; } //verify that if the list is empty
@@ -38,7 +55,7 @@ void RxList_Remove(RxList *const pThis, void *p_item){
 
 	//if the head node itself holds the key(p_item) to be deleted
 	if(RxNode_GetData(p_curNode) == p_item){
-		pThis->mp_head = RxNode_GetNext(p_curNode);  //change head
+		pThis->mp_head = RxNode_GetNext(p_curNode);  //reset head
 		//if the new head is NULL, the list shall be NULL
 		if(pThis->mp_head == NULL){
 			pThis->mp_tail = NULL;
@@ -53,7 +70,7 @@ void RxList_Remove(RxList *const pThis, void *p_item){
 	while(p_nxtNode != NULL){
 		//if the key(p_item) has been found
 		if(RxNode_GetData(p_nxtNode) == p_item){
-			//re-link, linke curent node with the next-next node
+			//re-link, link curent node with the next-next node
 			RxNode_SetNext(p_curNode, RxNode_GetNext(p_nxtNode));
 			//if the to-be-deleted node is the tail node
 			if(pThis->mp_tail == p_nxtNode){
@@ -66,9 +83,8 @@ void RxList_Remove(RxList *const pThis, void *p_item){
 		}
 		p_curNode = p_nxtNode;
 	}
-
 	return;
-}
+}//----- ----- ----- -----
 
 
 void * RxList_GetAt(RxList *const pThis, int pos){
@@ -82,6 +98,7 @@ void * RxList_GetAt(RxList *const pThis, int pos){
 	}
 	return RxNode_GetData(p_iter);
 }
+
 
 void * RxList_GetFirst(RxList *const pThis){
 	if(pThis->mp_head == NULL){ return NULL; }
@@ -142,23 +159,22 @@ static void RxList_Add(RxList *const pThis, void *p_item, bool front){
 	RxNode_SetData(p_newNode, p_item); //set data to new node
 
 	if(pThis->mp_head == NULL){
-		//there is no node is the list
+		//there is no node is the list, set both head and tail node
 		RxNode_SetNext(p_newNode, NULL);
 		pThis->mp_head = p_newNode;
 		pThis->mp_tail = p_newNode;
 
 	} else if (front == true){
-		//add a new node before head node
+		//add a new node in front of head node
 		RxNode_SetNext(p_newNode, pThis->mp_head); //link new node to pThis
 		pThis->mp_head = p_newNode; //new nide becomes the head node now
 	} else {
-		//add a node after tail node
+		//add a node behind tail node
 		RxNode_SetNext(p_newNode, NULL); //link new node to NULL  
 		RxNode_SetNext(pThis->mp_tail, p_newNode); //link tail node to new node
 		pThis->mp_tail = p_newNode;  //new node becomes the tail node now
 	}
 
 	(pThis->m_size)++;
-
 	return; 
 }

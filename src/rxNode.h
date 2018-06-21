@@ -1,5 +1,5 @@
-#ifndef _RXNODE_H_ //include guards
-#define _RXNODE_H_ //include guards
+#ifndef RXNODE_H_ //include guards
+#define RXNODE_H_ //include guards
 
 typedef struct RxNode RxNode; //tydeft bofore struct delacration
 struct RxNode{
@@ -33,4 +33,4 @@ RxNode * RxNode_GetNext(RxNode *const pThis);
 void RxNode_SetNext(RxNode *const pThis, RxNode *p_nxtNode); 
 
 
-#endif //_RXNODE_H_ include guards
+#endif //RXNODE_H_ include guards
