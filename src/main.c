@@ -22,11 +22,11 @@ int main(){
 	
 	RxList_AddToFront(p_list, p_data1);
 	RxList_AddToFront(p_list, data_ary);
+	RxList_AddToBack(p_list, (data_ary+1));
 	RxList_AddToBack(p_list, (data_ary+2));
 
-	// RxList_Remove(p_list, p_data1);
+	RxList_Remove(p_list, (data_ary+2));
 
-	
 	int output1 = *(int *)RxList_GetFirst(p_list);
 	int output2 = *(int *)RxList_GetAt(p_list,1);
 	int output3 = *(int *)RxList_GetAt(p_list,2); 
