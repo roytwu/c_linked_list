@@ -106,13 +106,13 @@ void RxList_Remove(RxList *const pThis, void *p_item){
 void * RxList_GetAt(RxList *const pThis, int pos){
 	if(pos >= pThis->m_size){ return NULL; }
 	
-	RxNode * p_iter = pThis->mp_head;
+	//create a node to traverse in the list, starting from head
+	RxNode * p_travNode = pThis->mp_head;
 	
-	//does not making any sense here.
 	for(int i=0; i<pos; i++){
-		p_iter = RxNode_GetNext(p_iter);
+		p_travNode = RxNode_GetNext(p_travNode);
 	}
-	return RxNode_GetData(p_iter);
+	return RxNode_GetData(p_travNode);
 }
 
 
